@@ -35,8 +35,7 @@ while True:
             print(f" \nPerformer {i}/{performers}:")
             name = input("Enter your name: ")
             surname = input("Enter your surname: ")
-            performers_details += surname + ' '
-            performers_details += name + ' '
+            performers_details += surname + ' ' + name + ' '
             number_to_display += 1
             performers_details_for_screen += str(number_to_display) + '. ' + surname + ',' + name + '\t\t'
 
@@ -87,7 +86,26 @@ while True:
 
     # option 2 reading from a file.
     elif choice_main == 2:
-        print("(2) Generate Concert Details \n----------------------------\n")
+        print("(2) Generate Concert Details \n--------------------------------------")
+        try:
+            with open("performers.txt", 'r') as performers_file:
+                counter = 0
+                fname = ''
+                lname = ''
+                performer_type = ''
+                time_from_line = ''
+                for line in performers_file:
+                    counter += 1
+                    line_a = line.rstrip()
+                    contents = line_a
+                    fname, lname, performer_type, time_from_line = contents.split()
+                    # if act is longer than 15min print"*" next to the name.
+                    if int(time_from_line) > 15:
+                        print(f'{counter}: {fname},{lname}*      ({performer_type}){time_from_line:>10} minutes.')
+                    else:
+                        print(f'{counter}: {fname},{lname:<10}({performer_type}){time_from_line:>10} minutes.')
+        except IOError:
+            print("Could not find the file.\n")
 
     # option 3, exit.
     elif choice_main == 3:
